@@ -1,40 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 
-function ProdutoService() {
-    const [produtos, setProdutos] = useState([]);
-    const [loading, setLoading] = useState(true);
+
+export default function App() {
+  const [products, setProducts] = useState([]); 
+
   
-    useEffect(() => {
-      axios.get('http://10.0.0.2:3000/Produtos')
-        .then(response => {
-          setProdutos(response.data);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Erro ao buscar dados:', error);
-          setLoading(false);
-        });
-    }, []);
-  
-    return (
-      <View>
-        <Text>Lista de Produtos:</Text>
-        {loading ? (
-          <Text>Carregando...</Text>
-        ) : (
-          <ul>
-            {produtos.map(produto => (
-              <li key={produto.id}>
-                Nome: {produto.nome}, Descrição: {produto.descricao}, Preço: R$ {produto.preco.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-        )}
-      </View>
-    );
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/produtos'); 
+      const data = await response.json();
+      if (data) {
+        console.log(data)
+        setProducts(data);
+      } else {
+        console.error('Invalid JSON data format');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
-  
 
-export default ProdutoService;
+  return (
+    
+    <View style={styles.container}>
+      <Text style={styles.heading}>Menu de Produtos</Text>
+      <Button title="Listar Produtos" onPress={fetchProducts} />
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.productItem}>
+            <Text>{item.nome}</Text>
+            <Text>{item.descricao}</Text>
+            <Text>Price: {item.preco}</Text>
+          </View>
+        )}
+      />
+
+      
+    </View>
+
+    
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  heading: {
+    
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingTop: 30,
+    marginBottom: 16,
+    
+  },
+  productItem: {
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingBottom: 8,
+  },
+});
