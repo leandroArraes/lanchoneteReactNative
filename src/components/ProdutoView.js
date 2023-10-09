@@ -5,9 +5,7 @@ function ProdutoView({nome,descricao,preco}){
         <View>
             <Text>Nome: {nome}</Text>
             <Text>Descrição: {descricao}</Text>
-            <Text>Preço: {preco} </Text>
-
-            
+            <Text>Preço: {preco} </Text>            
         </View>
     )
 }
