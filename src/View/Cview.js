@@ -1,7 +1,7 @@
 import React from 'react';
 import {  StyleSheet, View, Text, Image, Dimensions} from 'react-native';
 import Carousel, { PaginationLight } from 'react-native-x-carousel';
-import  { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import {  Button, FlatList } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -26,21 +26,28 @@ function Cview (){
       }
     };
 
+    useEffect(() => {
+      fetchProducts(); 
+    }, []);
+
     const renderItem = data => (
-        <View  key={data.img} style={styles.cardContainer} >
+        <View  key={data.id} style={styles.cardContainer} >
           <View style={styles.cardWrapper}>
-            <Image style={styles.card} source={{ uri: data.img }} />
+          <Image style={styles.card}  source={require('../../assets/produtos/h1.png')} />
             <View style={[styles.cornerLabel,{ backgroundColor: data.cornerLabelColor },]}>
               <Text style={styles.cornerLabelText}>{ data.descricao } </Text>
+            
             </View>
+
           </View>
+          
         </View>
       );
     
       return (
 
 
-        <View style={styles.container}>
+        <View   style={styles.container}>
           <Carousel
             pagination={PaginationLight}
             renderItem={renderItem}
@@ -48,6 +55,8 @@ function Cview (){
             loop
             autoplay
           />
+        
+          
         </View>
       )
 }
@@ -58,6 +67,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop:150
     },
     cardContainer: {
       alignItems: 'center',
