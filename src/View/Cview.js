@@ -29,13 +29,14 @@ function Cview (){
     useEffect(() => {
       fetchProducts(); 
     }, []);
-
+    const imagen = "../../assets/produtos/h1.png"
     const renderItem = data => (
         <View  key={data.id} style={styles.cardContainer} >
+          
           <View style={styles.cardWrapper}>
-          <Image style={styles.card}  source={require('../../assets/produtos/h1.png')} />
+          <Image style={styles.card}  source={require(imagen)} />
             <View style={[styles.cornerLabel,{ backgroundColor: data.cornerLabelColor },]}>
-              <Text style={styles.cornerLabelText}>{ data.descricao } </Text>
+              <Text style={styles.cornerLabelText}>{ data.url } </Text>
             
             </View>
 
