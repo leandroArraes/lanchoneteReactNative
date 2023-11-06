@@ -36,7 +36,7 @@ function Cview (){
           <View style={styles.cardWrapper}>
           <Image style={styles.card}  source={require(imagen)} />
             <View style={[styles.cornerLabel,{ backgroundColor: data.cornerLabelColor },]}>
-              <Text style={styles.cornerLabelText}>{ data.url } </Text>
+              <Text style={styles.cornerLabelText}>{ data.descricao } </Text>
             
             </View>
 
